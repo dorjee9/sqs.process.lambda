@@ -5,10 +5,10 @@ import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.lambda.runtime.events.SQSEvent;
 
-public class LambdaSqs implements RequestHandler<SQSEvent, Void> {
+public class LambdaSqs implements RequestHandler<SQSEvent, Integer> {
 
     @Override
-    public Void handleRequest(SQSEvent sqsEvent, Context context) {
+    public Integer handleRequest(SQSEvent sqsEvent, Context context) {
         LambdaLogger logger = context.getLogger();
         try {
             for (SQSEvent.SQSMessage message : sqsEvent.getRecords()) {
@@ -18,6 +18,6 @@ public class LambdaSqs implements RequestHandler<SQSEvent, Void> {
             logger.log("Exception handling batch seed request."+ex);
             throw ex;
         }
-        return null;
+        return 0;
     }
 }
